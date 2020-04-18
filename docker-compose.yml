@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  rails-debian:
+  debian:
     build:
       context: .
       dockerfile: docker/debian/Dockerfile
@@ -11,7 +11,7 @@ services:
     ports:
       - 3000:3000
 
-  rails-alpine:
+  alpine:
     build:
       context: .
       dockerfile: docker/alpine/Dockerfile

@@ -5,3 +5,4 @@ db
 .git
 .bundle
 .gitignore
+Makefile
