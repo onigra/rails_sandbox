@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  rails-debian:
+    build:
+      context: .
+      dockerfile: docker/debian/Dockerfile
+    environment:
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_ENV: production
+    ports:
+      - 3000:3000
+
+  rails-alpine:
+    build:
+      context: .
+      dockerfile: docker/alpine/Dockerfile
+    environment:
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_ENV: production
+    ports:
+      - 3000:3000
