@@ -8,6 +8,9 @@ services:
     environment:
       RAILS_LOG_TO_STDOUT: "true"
       RAILS_ENV: production
+      DB_HOST: db
+      DB_USERNAME: root
+      DB_PASSWORD: root
     ports:
       - 3000:3000
 
@@ -18,5 +21,23 @@ services:
     environment:
       RAILS_LOG_TO_STDOUT: "true"
       RAILS_ENV: production
+      DB_HOST: db
+      DB_USERNAME: root
+      DB_PASSWORD: root
     ports:
       - 3000:3000
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
+    command: |
+      mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_ja_0900_as_cs --innodb_file_per_table=true --explicit-defaults-for-timestamp=true --sql-mode="TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY"
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-db:/var/lib/mysql
+
+volumes:
+  mysql-db:

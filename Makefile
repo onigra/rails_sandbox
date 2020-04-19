@@ -12,6 +12,9 @@ al:
 alb:
 	docker-compose build alpine
 
+rdb:
+	docker-compose up db
+
 down:
 	docker-compose down
 
