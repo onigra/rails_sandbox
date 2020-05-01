@@ -13,6 +13,7 @@ services:
       DB_PASSWORD: root
     ports:
       - 3000:3000
+    entrypoint: "bundle exec unicorn -c config/unicorn.rb"
 
   alpine:
     build:
