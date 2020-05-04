@@ -37,6 +37,7 @@ Rails.application.configure do
 
   # Prepend all log lines with the following tags.
   config.log_tags = {
+    service: 'rails',
     request_id: :request_id
   }
 
