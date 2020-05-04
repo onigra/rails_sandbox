@@ -36,7 +36,9 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = {
+    request_id: :request_id
+  }
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -68,10 +70,20 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+  config.colorize_logging = false
+  config.rails_semantic_logger.semantic = true
+  config.rails_semantic_logger.started = true
+  config.rails_semantic_logger.processing = false
+  config.rails_semantic_logger.rendered = false
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    STDOUT.sync = true
+    config.rails_semantic_logger.add_file_appender = false
+    config.semantic_logger.add_appender(
+      io: STDOUT,
+      level: config.log_level,
+      formatter: :json,
+    )
   end
 
   # Inserts middleware to perform automatic connection switching.
