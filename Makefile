@@ -1,7 +1,7 @@
 PROJECT_NAME := rails_sandbox
 
 deb:
-	docker-compose up debian
+	docker-compose up debian db
 
 debb:
 	docker-compose build debian
