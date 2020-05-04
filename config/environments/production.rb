@@ -35,6 +35,11 @@ Rails.application.configure do
   # when problems arise.
   config.log_level = :info
 
+  # Prepend all log lines with the following tags.
+  config.log_tags = {
+    request_id: :request_id
+  }
+
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
@@ -58,6 +63,26 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Use a different logger for distributed setups.
+  # require 'syslog/logger'
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+
+  config.colorize_logging = false
+  config.rails_semantic_logger.semantic = true
+  config.rails_semantic_logger.started = true
+  config.rails_semantic_logger.processing = false
+  config.rails_semantic_logger.rendered = false
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    STDOUT.sync = true
+    config.rails_semantic_logger.add_file_appender = false
+    config.semantic_logger.add_appender(
+      io: STDOUT,
+      level: config.log_level,
+      formatter: :json,
+    )
+  end
+
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
@@ -78,24 +103,4 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-
-  # log settings
-  config.colorize_logging = false
-  config.lograge.enabled = true
-  config.lograge.base_controller_class = 'ActionController::API'
-  config.lograge.formatter = Lograge::Formatters::Json.new
-  config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
-  config.lograge.custom_options = lambda do |event|
-    {
-      service: 'rails',
-      exception: event.payload[:exception],
-      exception_object: event.payload[:exception_object],
-      backtrace: event.payload[:exception_object].try(:backtrace)
-    }
-  end
-  config.lograge.custom_payload do |controller|
-    {
-      request_id: controller.request.request_id
-    }
-  end
 end

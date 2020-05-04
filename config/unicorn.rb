@@ -17,9 +17,11 @@ preload_app true
 check_client_connection false
 
 before_fork do |server, worker|
+  SemanticLogger.reopen
   defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
 end
 
 after_fork do |server, worker|
+  SemanticLogger.reopen
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 end
