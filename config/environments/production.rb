@@ -94,4 +94,24 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  # log settings
+  config.colorize_logging = false
+  config.lograge.enabled = true
+  config.lograge.base_controller_class = 'ActionController::API'
+  config.lograge.formatter = Lograge::Formatters::Json.new
+  config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
+  config.lograge.custom_options = lambda do |event|
+    {
+      service: 'rails',
+      exception: event.payload[:exception],
+      exception_object: event.payload[:exception_object],
+      backtrace: event.payload[:exception_object].try(:backtrace)
+    }
+  end
+  config.lograge.custom_payload do |controller|
+    {
+      request_id: controller.request.request_id
+    }
+  end
 end
