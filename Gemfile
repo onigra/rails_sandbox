@@ -8,8 +8,6 @@ gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
-gem 'unicorn'
-gem 'lograge'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
@@ -36,3 +34,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :production do
+  gem 'unicorn'
+  gem 'rails_semantic_logger'
+end
