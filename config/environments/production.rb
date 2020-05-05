@@ -81,6 +81,7 @@ Rails.application.configure do
       io: STDOUT,
       level: config.log_level,
       formatter: :json,
+      filter: -> log { log.payload[:path] !~ /^\/healthcheck$/ }
     )
   end
 

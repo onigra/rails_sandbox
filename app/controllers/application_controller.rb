@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
   def index
-    render json: { message: 'ok' }
+    render json: { message: 'root' }
   end
 end
