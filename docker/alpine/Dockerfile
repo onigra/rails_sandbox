@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:experimental
+
 FROM ruby:2.6.6-alpine as builder
 
 RUN apk --update --no-cache add shadow sudo busybox-suid mariadb-connector-c-dev tzdata alpine-sdk

@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:experimental
+
 FROM ruby:2.6.6-slim-buster as builder
 
 RUN apt update && \
